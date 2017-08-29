@@ -1,25 +1,41 @@
 apply plugin: 'com.android.library'
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "25.0.2"
+  compileSdkVersion rootProject.compileSdkVersion
+  buildToolsVersion rootProject.buildToolsVersion
 
   defaultConfig {
-    minSdkVersion 16
-    targetSdkVersion 25
-    versionCode 1
-    versionName "1.0"
+    minSdkVersion rootProject.minSdkVersion
+    targetSdkVersion rootProject.targetSdkVersion
+
+    versionCode Integer.parseInt(project.VERSION_CODE)
+    versionName project.VERSION_NAME
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+    javaCompileOptions {
+      annotationProcessorOptions {
+        includeCompileClasspath false
+      }
     }
   }
-}
 
+  lintOptions {
+    textReport true
+    abortOnError false
+    textOutput 'stdout'
+    warning 'UnusedResources'
+    warning 'ResourceType'
+    warning 'InvalidPackage'
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+}
 dependencies {
-  compile project(':geocoder')
+  implementation project(':geocoder')
+  implementation 'com.android.support:support-annotations:26.0.1'
+
 }
