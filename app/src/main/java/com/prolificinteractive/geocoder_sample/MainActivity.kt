@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             .map { text.toString() }
             .delay(1, TimeUnit.SECONDS)
             .flatMap { location ->
-              geocoder.getFromLocation(location).toObservable()
+              geocoder.getFromLocation(location, 1).toObservable()
                   .subscribeOn(Schedulers.io())
                   .observeOn(AndroidSchedulers.mainThread())
             }

@@ -33,7 +33,38 @@ interface GeocodingApi {
    * is unavailable or any other I/O problem occurs
    */
   @Throws(Exception::class)
-  fun locationCall(downloader: Downloader, locationName: String): List<*>
+  fun locationCall(downloader: Downloader, locationName: String, maxResults: Int): List<*>
+
+  /**
+   * Returns an array of Addresses that are known to describe the named
+   * location, which may be a place name such as "Dalvik,
+   * Iceland", an address such as "1600 Amphitheatre Parkway, Mountain View,
+   * CA", an airport code such as "SFO", etc.. The returned addresses will be
+   * localized for the locale provided to this class's constructor.
+   *
+   *
+   *
+   * The query will block and returned values will be obtained by means of a
+   * network lookup. The results are a best guess and are not guaranteed to be
+   * meaningful or correct. It may be useful to call this method from a thread
+   * separate from your primary UI thread.
+   *
+   * @param downloader             the interface to perform downloads
+   * @param locationName           a user-supplied description of a location
+   *
+   * @return a list of Address objects. Returns empty list if no matches were found.
+   * @throws Exception        if parse failed, or if the network
+   * is unavailable or any other I/O problem occurs
+   */
+  @Throws(Exception::class)
+  fun locationCallWithBounds(downloader: Downloader,
+                             locationName: String,
+                             maxResults: Int,
+                             lowerLeftLatitude: Double,
+                             lowerLeftLongitude: Double,
+                             upperRightLatitude: Double,
+                             upperRightLongitude: Double): List<*>
+
 
   /**
    * Returns an array of Addresses that are known to describe the area
@@ -56,7 +87,11 @@ interface GeocodingApi {
    * @throws Exception  If the network is unavailable or any other I/O problem occurs
    */
   @Throws(Exception::class)
-  fun coordinateCall(downloader: Downloader, latitude: Double, longitude: Double): List<*>
+  fun coordinateCall(
+      downloader: Downloader,
+      latitude: Double,
+      longitude: Double,
+      maxResults: Int): List<*>
 
   /**
    * Performs a conversion from the provided APIs address object to a list of [Address].

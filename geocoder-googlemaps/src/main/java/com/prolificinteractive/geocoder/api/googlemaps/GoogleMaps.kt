@@ -18,7 +18,7 @@ class GoogleMaps private constructor(private val mApiKey: String?) : GeocodingAp
   override fun coordinateCall(
       downloader: Downloader,
       latitude: Double,
-      longitude: Double): List<Address> {
+      longitude: Double, maxResults: Int): List<Address> {
 
     val uriBuilder = buildBaseRequestUri()
         .appendQueryParameter("latlng", latitude.toString() + "," + longitude)
@@ -38,11 +38,43 @@ class GoogleMaps private constructor(private val mApiKey: String?) : GeocodingAp
 
   }
 
+  override fun locationCallWithBounds(
+      downloader: Downloader,
+      locationName: String,
+      maxResults: Int,
+      lowerLeftLatitude: Double,
+      lowerLeftLongitude: Double,
+      upperRightLatitude: Double, upperRightLongitude: Double): List<*> {
+
+    val uriBuilder = buildBaseRequestUri()
+        .appendQueryParameter("address", locationName)
+        .appendQueryParameter("bounds" , String.format(
+            "%s,%s|%s,%s",
+            lowerLeftLatitude,
+            lowerLeftLongitude,
+            upperRightLatitude,
+            upperRightLongitude)
+        )
+
+    val url = uriBuilder.toString()
+
+    val data = downloader.request(url)
+
+    try {
+      return Parser.parseJson(data, MAX_RESULTS, true)
+    } catch (e: GoogleMapsException) {
+      if (e.status == Status.OVER_QUERY_LIMIT) {
+        throw RetriableException(e.toString())
+      } else {
+        throw e }
+    }
+
+  }
 
   @Throws(Exception::class)
   override fun locationCall(
       downloader: Downloader,
-      locationName: String): List<Address> {
+      locationName: String, maxResults: Int): List<Address> {
 
     val uriBuilder = buildBaseRequestUri()
         .appendQueryParameter("address", locationName)
