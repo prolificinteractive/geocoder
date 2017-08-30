@@ -1,16 +1,15 @@
-package com.prolificinteractive.geocoder;
+package com.prolificinteractive.geocoder
 
-import com.prolificinteractive.geocoder.model.Address;
-import java.util.List;
+import com.prolificinteractive.geocoder.model.Address
 
-public interface GeocodingApi {
+interface GeocodingApi {
 
   /**
    * Provide the name of the API.
    *
    * @return the api name.
    */
-  String getName();
+  fun name(): String
 
   /**
    * Returns an array of Addresses that are known to describe the named
@@ -19,7 +18,8 @@ public interface GeocodingApi {
    * CA", an airport code such as "SFO", etc.. The returned addresses will be
    * localized for the locale provided to this class's constructor.
    *
-   * <p>
+   *
+   *
    * The query will block and returned values will be obtained by means of a
    * network lookup. The results are a best guess and are not guaranteed to be
    * meaningful or correct. It may be useful to call this method from a thread
@@ -27,12 +27,13 @@ public interface GeocodingApi {
    *
    * @param downloader             the interface to perform downloads
    * @param locationName           a user-supplied description of a location
-
+   *
    * @return a list of Address objects. Returns empty list if no matches were found.
    * @throws Exception        if parse failed, or if the network
-   *                                  is unavailable or any other I/O problem occurs
+   * is unavailable or any other I/O problem occurs
    */
-  List<?> locationCall(Downloader downloader, String locationName) throws Exception;
+  @Throws(Exception::class)
+  fun locationCall(downloader: Downloader, locationName: String): List<*>
 
   /**
    * Returns an array of Addresses that are known to describe the area
@@ -40,7 +41,8 @@ public interface GeocodingApi {
    * addresses will be localized for the locale provided to this class's
    * constructor.
    *
-   * <p>
+   *
+   *
    * The returned values may be obtained by means of a network lookup. The
    * results are a best guess and are not guaranteed to be meaningful or
    * correct. It may be useful to call this method from a thread separate from
@@ -53,12 +55,14 @@ public interface GeocodingApi {
    * @return a list of Address objects. Returns empty list if no matches were found.
    * @throws Exception  If the network is unavailable or any other I/O problem occurs
    */
-  List<?> coordinateCall(Downloader downloader, double latitude, double longitude) throws Exception;
+  @Throws(Exception::class)
+  fun coordinateCall(downloader: Downloader, latitude: Double, longitude: Double): List<*>
 
   /**
-   * Performs a conversion from the provided APIs address object to a list of {@link Address}.
+   * Performs a conversion from the provided APIs address object to a list of [Address].
    *
-   * @return a list of {@link Address} objects.
+   * @return a list of [Address] objects.
    */
-  List<Address> convert(List<?> addresses) throws Exception;
+  @Throws(Exception::class)
+  fun convert(addresses: List<*>): List<Address>
 }

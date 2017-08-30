@@ -25,20 +25,12 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
-enum class Providers(val apiName: String, val api: GeocodingApi) {
-  GOOGLE_MAPS("Google Maps", GoogleMaps.create("")),
-  GOOGLE_MAPS_API_KEY("Google Maps w/ API Key", GoogleMaps.create("")),
-  OPEN_STREET_MAPS("Open Street Maps", OpenStreetMaps.create(Gson()))
-
-}
-
 class MainActivity : AppCompatActivity() {
 
   private lateinit var apiSpinner: Spinner
   private lateinit var input: EditText
   private lateinit var result: TextView
   private lateinit var geocoder: Geocoder
-
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -65,6 +57,7 @@ class MainActivity : AppCompatActivity() {
       override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
         disposable.clear()
         disposable.add(Observable.just(text)
+            .filter { t -> t.isNotEmpty() }
             .map { text.toString() }
             .delay(1, TimeUnit.SECONDS)
             .flatMap { location ->
@@ -78,14 +71,23 @@ class MainActivity : AppCompatActivity() {
       }
     }
 
+    val okhttpFactory = OkHttpFactory(
+        OkHttpClient.Builder()
+            .build())
+        .addHeaders(
+            mapOf(
+                HEADER_USER_AGENT to System.getProperty("http.agent"),
+                HEADER_REFERER to System.getProperty("https://play.google.com/store/apps/details?id=com.scotts.gro&hl=en")
+            )
+        )
+
     apiSpinner.onItemSelectedListener = object : OnItemSelectedListener {
       override fun onNothingSelected(p0: AdapterView<*>?) {}
 
       override fun onItemSelected(parent: AdapterView<*>?, view: View?, index: Int, id: Long) {
         geocoder = GeocoderBuilder()
             .addGeocodingApi(Providers.values()[index].api)
-            .setDownloaderFactory(OkHttpFactory(OkHttpClient.Builder().build()))
-            .setSwitchPolicy { _, _ -> false }
+            .setDownloaderFactory(okhttpFactory)
             .build()
 
         textWatcher.onTextChanged(input.text, 0, 0, 0)
@@ -94,11 +96,21 @@ class MainActivity : AppCompatActivity() {
 
     geocoder = GeocoderBuilder()
         .addGeocodingApi(GoogleMaps.create(""))
-        .setDownloaderFactory(OkHttpFactory(OkHttpClient.Builder().build()))
-        .setSwitchPolicy { _, _ -> false }
+        .setDownloaderFactory(okhttpFactory)
         .build()
 
     input.addTextChangedListener(textWatcher)
   }
+
+  companion object {
+    private val HEADER_REFERER = "Referer"
+    private val HEADER_USER_AGENT = "User-Agent"
+  }
 }
 
+enum class Providers(val apiName: String, val api: GeocodingApi) {
+  GOOGLE_MAPS("Google Maps", GoogleMaps.create("")),
+  GOOGLE_MAPS_API_KEY("Google Maps w/ API Key", GoogleMaps.create("")),
+  OPEN_STREET_MAPS("Open Street Maps", OpenStreetMaps.create(Gson()))
+
+}
