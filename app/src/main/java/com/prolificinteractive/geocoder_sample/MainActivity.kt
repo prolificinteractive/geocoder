@@ -109,8 +109,8 @@ class MainActivity : AppCompatActivity() {
 }
 
 enum class Providers(val apiName: String, val api: GeocodingApi) {
-  GOOGLE_MAPS("Google Maps", GoogleMaps.create("")),
-  GOOGLE_MAPS_API_KEY("Google Maps w/ API Key", GoogleMaps.create("")),
-  OPEN_STREET_MAPS("Open Street Maps", OpenStreetMaps.create(Gson()))
+  GOOGLE_MAPS("Google Maps", GoogleMaps.create()),
+  GOOGLE_MAPS_API_KEY("Google Maps w/ API Key", GoogleMaps.create("AIzaSyDYOU1mwm69bd87iqlgquN6Psq9KmWOyNw")),
+  OPEN_STREET_MAPS("Open Street Maps", OpenStreetMaps.create())
 
 }

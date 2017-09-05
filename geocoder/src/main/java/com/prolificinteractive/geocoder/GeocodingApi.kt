@@ -51,6 +51,10 @@ interface GeocodingApi {
    *
    * @param downloader             the interface to perform downloads
    * @param locationName           a user-supplied description of a location
+   * @param lowerLeftLatitude      the latitude of the southwest point
+   * @param lowerLeftLongitude     the longitude of the southwest point
+   * @param upperRightLatitude     the latitude of the northeast point
+   * @param upperRightLongitude    the longitude of the northeast point
    *
    * @return a list of Address objects. Returns empty list if no matches were found.
    * @throws Exception        if parse failed, or if the network

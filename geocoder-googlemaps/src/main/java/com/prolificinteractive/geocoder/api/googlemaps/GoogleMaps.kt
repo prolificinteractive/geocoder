@@ -108,6 +108,12 @@ class GoogleMaps private constructor(private val mApiKey: String?) : GeocodingAp
     private val ENDPOINT_URL = "https://maps.googleapis.com/maps/api/geocode/json"
     private val MAX_RESULTS = -1
 
+    @JvmStatic
+    fun create(): GoogleMaps {
+      return GoogleMaps("")
+    }
+
+    @JvmStatic
     fun create(mApiKey: String): GoogleMaps {
       return GoogleMaps(mApiKey)
     }

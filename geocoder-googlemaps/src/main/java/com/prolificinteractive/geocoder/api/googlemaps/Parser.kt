@@ -178,7 +178,7 @@ class Parser {
         }
       }
 
-      return address.copy(formattedAddress = formattedAddress,
+      return address.copy(
           streetAddress = streetAddress,
           route = route,
           intersection = intersection,

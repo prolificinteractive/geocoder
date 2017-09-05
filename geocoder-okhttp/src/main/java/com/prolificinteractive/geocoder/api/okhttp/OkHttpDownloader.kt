@@ -15,13 +15,11 @@ class OkHttpDownloader private constructor(
   override val disposable: Disposable
     get() = object : Disposable {
       override fun dispose() {
-        if (call != null) {
-          call!!.cancel()
-        }
+        call?.cancel()
       }
 
       override fun isDisposed(): Boolean {
-        return call != null && call!!.isCanceled
+        return call?.isCanceled == true
       }
     }
 
@@ -38,10 +36,7 @@ class OkHttpDownloader private constructor(
     call = client
         .newCall(requestBuilder.build())
 
-    return call!!
-        .execute()
-        .body()!!
-        .bytes()
+    return call!!.execute().body()?.bytes()!!
   }
 
   class OkHttpFactory(private val client: OkHttpClient) : Downloader.Factory {

@@ -102,8 +102,9 @@ class OpenStreetMaps private constructor(private val gson: Gson) : GeocodingApi 
     private val OSM_REVERSE_API = "http://nominatim.openstreetmap.org/reverse"
     private val OSM_GEOCODING_API = "http://nominatim.openstreetmap.org/search"
 
-    fun create(gson: Gson): OpenStreetMaps {
-      return OpenStreetMaps(gson)
+    @JvmStatic
+    fun create(): OpenStreetMaps {
+      return OpenStreetMaps(Gson())
     }
   }
 }
