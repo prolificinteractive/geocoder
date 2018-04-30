@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import com.google.gson.Gson
 import com.prolificinteractive.geocoder.Geocoder
 import com.prolificinteractive.geocoder.GeocoderBuilder
 import com.prolificinteractive.geocoder.GeocodingApi
