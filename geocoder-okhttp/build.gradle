@@ -34,7 +34,7 @@ android {
 }
 
 dependencies {
-  implementation project(":geocoder")
+  api project(":geocoder")
 
   implementation rootProject.gson
   implementation rootProject.okhttp
