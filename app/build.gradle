@@ -1,14 +1,19 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
-  compileSdkVersion 26
-  buildToolsVersion "26.0.1"
+  compileSdkVersion rootProject.compileSdkVersion
+  buildToolsVersion rootProject.buildToolsVersion
   defaultConfig {
-    applicationId "com.prolificinteractive.geocoder_sample"
-    minSdkVersion 16
-    targetSdkVersion 25
-    versionCode 1
-    versionName "1.0"
+    applicationId "com.prolificinteractive.geocodersample"
+
+    minSdkVersion rootProject.minSdkVersion
+    targetSdkVersion rootProject.targetSdkVersion
+
+    versionCode Integer.parseInt(project.VERSION_CODE)
+    versionName project.VERSION_NAME
+
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
@@ -18,6 +23,15 @@ android {
     }
   }
 
+  lintOptions {
+    textReport true
+    abortOnError false
+    textOutput 'stdout'
+    warning 'UnusedResources'
+    warning 'ResourceType'
+    warning 'InvalidPackage'
+  }
+
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
@@ -25,26 +39,18 @@ android {
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-    exclude group: 'com.android.support', module: 'support-annotations'
-  })
-
   implementation project(':geocoder')
   implementation project(':geocoder-googlemaps')
   implementation project(':geocoder-openstreetmap')
   implementation project(':geocoder-okhttp')
 
-  implementation 'com.android.support:appcompat-v7:26.0.1'
-  implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-  testCompile 'junit:junit:4.12'
-  implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-  implementation 'io.reactivex.rxjava2:rxkotlin:2.1.0'
-  implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
-  implementation 'com.squareup.okhttp3:okhttp:3.8.1'
-  implementation 'com.google.code.gson:gson:2.8.1'
-  implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-}
+  implementation rootProject.appcompatV7
+  implementation rootProject.constraintLayout
+  implementation rootProject.rxandroid
+  implementation rootProject.rxjava
+  implementation rootProject.okhttp
+  implementation rootProject.gson
+  implementation rootProject.kotlinStdLib
 
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+  testImplementation rootProject.junit
+}
