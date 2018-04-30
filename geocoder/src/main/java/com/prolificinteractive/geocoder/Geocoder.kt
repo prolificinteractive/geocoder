@@ -239,7 +239,7 @@ class Geocoder internal constructor(
             // Observable will be retried (i.e. re-subscribed)
             Flowable.timer((retryCount * retryDelayMillis).toLong(), TimeUnit.MILLISECONDS)
           } else {
-            Flowable.error<Any>(throwable.cause)
+            Flowable.error<Throwable>(throwable)
           }
         }
 

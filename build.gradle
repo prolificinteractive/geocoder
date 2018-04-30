@@ -1,128 +1,55 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-  ext.kotlin_version = '1.1.4-3'
+  ext.kotlin_version = "1.2.40"
   repositories {
-    jcenter()
     google()
+    jcenter()
   }
   dependencies {
-    classpath 'com.android.tools.build:gradle:3.0.0-beta6'
+    classpath "com.android.tools.build:gradle:3.1.2"
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
   }
 }
 
 allprojects {
   repositories {
-    jcenter()
     google()
+    jcenter()
     maven { url "https://jitpack.io" }
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-    maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
   }
 }
 
 ext {
   // Android Version
   minSdkVersion = 16
-  compileSdkVersion = 25
-  targetSdkVersion = 25
-  buildToolsVersion = '25.0.2'
+  compileSdkVersion = 27
+  targetSdkVersion = 27
+  buildToolsVersion = "27.0.3"
 
   // Libraries Version
-  aaVersion = '4.2.0'
-  chuckVersion = '1.0.4'
-  daggerVersion = '2.10'
-  googlePlayVersion = '10.0.1'
-  junitVersion = '4.12'
-  leakCanaryVersion = '1.5'
-  okhttpVersion = '3.6.0'
-  retrofitVersion = '2.2.0'
-  rxbindingVersion = '2.0.0'
-  rxlifecycleVersion = '2.0.1'
-  supportLibraryVersion = '25.3.1'
+  junitVersion = "4.12"
+  kotlin_version = "1.2.40"
+  okhttpVersion = "3.10.0"
+  supportLibraryVersion = "27.1.1"
 
-  multidex = 'com.android.support:multidex:1.0.1'
+  kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-  // Android Annotations
-  androidAnnotations = "org.androidannotations:androidannotations:$aaVersion"
-  androidAnnotationsApi = "org.androidannotations:androidannotations-api:$aaVersion"
-
-  // Support Libraries
   appcompatV7 = "com.android.support:appcompat-v7:$supportLibraryVersion"
-  cardviewV7 = "com.android.support:cardview-v7:$supportLibraryVersion"
-  design = "com.android.support:design:$supportLibraryVersion"
-  gridlayoutV7 = "com.android.support:gridlayout-v7:$supportLibraryVersion"
-  recyclerviewV7 = "com.android.support:recyclerview-v7:$supportLibraryVersion"
   supportAnnotations = "com.android.support:support-annotations:$supportLibraryVersion"
-  supportV4 = "com.android.support:support-v4:$supportLibraryVersion"
+  constraintLayout = "com.android.support.constraint:constraint-layout:1.1.0"
 
-  // Api
-  retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
-  converterGson = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-  adapterRxjava = 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
-  okhttp = "com.squareup.okhttp3:okhttp:$okhttpVersion"
-  loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
-  okio = 'com.squareup.okio:okio:1.11.0'
-  gson = 'com.google.code.gson:gson:2.8.0'
-  chuck = "com.readystatesoftware.chuck:library:$chuckVersion"
-  chuckNoOp = "com.readystatesoftware.chuck:library-no-op:$chuckVersion"
-
-  // Auto Value
-  autoValue = 'com.google.auto.value:auto-value:1.4.1'
-  autoValueParcel = 'com.ryanharter.auto.value:auto-value-parcel:0.2.5'
-  autoValueGson = 'com.ryanharter.auto.value:auto-value-gson:0.4.3'
-  autoValueAnnotations = 'com.jakewharton.auto.value:auto-value-annotations:1.3'
+  okhttp = "com.squareup.okhttp3:okhttp:3.10.0"
+  gson = "com.google.code.gson:gson:2.8.2"
 
   // Rx
-  rxjava = 'io.reactivex.rxjava2:rxjava:2.0.4'
-  rxandroid = 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  rxjava = "io.reactivex.rxjava2:rxjava:2.0.4"
+  rxandroid = "io.reactivex.rxjava2:rxandroid:2.0.1"
 
-  rxbinding = "com.jakewharton.rxbinding2:rxbinding:$rxbindingVersion"
-  rxbindingSupportV4 = "com.jakewharton.rxbinding2:rxbinding-support-v4:$rxbindingVersion"
-  rxbindingAppcompatV7 = "com.jakewharton.rxbinding2:rxbinding-appcompat-v7:$rxbindingVersion"
-  rxbindingDesign = "com.jakewharton.rxbinding2:rxbinding-design:$rxbindingVersion"
-
-  rxlifecycle = "com.trello.rxlifecycle2:rxlifecycle:$rxlifecycleVersion"
-  rxlifecycleComponents = "com.trello.rxlifecycle2:rxlifecycle-components:$rxlifecycleVersion"
-
-  // Dagger
-  annotationsApi = 'javax.annotation:javax.annotation-api:1.2'
-  dagger = "com.google.dagger:dagger:$daggerVersion"
-  daggerCompiler = "com.google.dagger:dagger-compiler:$daggerVersion"
-  inject = 'javax.inject:javax.inject:1'
-
-  // UI
-  adapterdelegates = 'com.hannesdorfmann:adapterdelegates3:3.0.1'
-  calligraphy = 'uk.co.chrisjenx:calligraphy:2.2.0'
-  picasso = 'com.squareup.picasso:picasso:2.6.0-SNAPSHOT'
-
-  // Others
-  conceal = 'com.facebook.conceal:conceal:1.1.3@aar'
-  leakCanary = "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
-  leakCanaryNoOp = "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion"
-  timber = 'com.jakewharton.timber:timber:4.5.1'
-
-  jUnit = "junit:junit:$junitVersion"
-
-  supportLibs = [appcompatV7,
-                 cardviewV7,
-                 design,
-                 recyclerviewV7,
-                 supportAnnotations,
-                 supportV4]
-
-  rxLibs = [rxjava,
-            rxandroid]
-
-  rxbindingLibs = [rxbinding,
-                   rxbindingSupportV4,
-                   rxbindingAppcompatV7,
-                   rxbindingDesign]
-
-  rxlifecycleLibs = [rxlifecycle,
-                     rxlifecycleComponents]
+  junit = "junit:junit:$junitVersion"
 }

@@ -51,9 +51,9 @@ class MainActivity : AppCompatActivity() {
 
       override fun afterTextChanged(p0: Editable?) {}
 
-      override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+      override fun beforeTextChanged(p0: CharSequence, p1: Int, p2: Int, p3: Int) {}
 
-      override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+      override fun onTextChanged(text: CharSequence, p1: Int, p2: Int, p3: Int) {
         disposable.clear()
         disposable.add(Observable.just(text)
             .filter { t -> t.isNotEmpty() }
@@ -111,5 +111,4 @@ enum class Providers(val apiName: String, val api: GeocodingApi) {
   GOOGLE_MAPS("Google Maps", GoogleMaps.create()),
   GOOGLE_MAPS_API_KEY("Google Maps w/ API Key", GoogleMaps.create("AIzaSyDYOU1mwm69bd87iqlgquN6Psq9KmWOyNw")),
   OPEN_STREET_MAPS("Open Street Maps", OpenStreetMaps.create())
-
 }

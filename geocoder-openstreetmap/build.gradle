@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.prolificinteractive'
 
 android {
   compileSdkVersion rootProject.compileSdkVersion
@@ -13,12 +16,6 @@ android {
     versionName project.VERSION_NAME
 
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-    javaCompileOptions {
-      annotationProcessorOptions {
-        includeCompileClasspath false
-      }
-    }
   }
 
   lintOptions {
@@ -38,10 +35,8 @@ android {
 
 dependencies {
   implementation project(':geocoder')
-  implementation 'com.android.support:support-annotations:26.0.1'
-  implementation 'com.google.code.gson:gson:2.8.1'
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-}
-repositories {
-  mavenCentral()
+
+  implementation rootProject.supportAnnotations
+  implementation rootProject.gson
+  implementation rootProject.kotlinStdLib
 }
