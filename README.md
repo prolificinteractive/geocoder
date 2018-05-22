@@ -1,4 +1,4 @@
-### Geocoder
+# Geocoder
 
 This is a device independent and plugable replacement for Android's builtin Geocoder.
 
@@ -13,6 +13,36 @@ will silently fail. Additionally, the backend implementation of the android Geoc
 vary across manufacturers, devices and android versions. This library was created
 to provide a consistent experience across all devices and users.
 
+
+## Installation
+
+Step 1. Add the JitPack repository to your build file
+
+```groovy
+allprojects {
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
+
+Step 2. Add the dependency
+
+```groovy
+dependencies {
+    implementation 'com.github.prolificinteractive.geocoder:geocoder:0.1.0'
+
+    // For Geocoder and Google Maps
+    implementation 'com.github.prolificinteractive.geocoder:geocoder-googlemaps:0.1.0'
+
+    // For Geocoder and OkHttp
+    implementation 'com.github.prolificinteractive.geocoder:geocoder-okhttp:0.1.0'
+
+    // For Geocoder and Open Street Maps
+    implementation 'com.github.prolificinteractive.geocoder:geocoder-openstreetmap:0.1.0'
+}
+```
 
 ### Usage
 
@@ -37,13 +67,13 @@ The pitfalls of the Android Geocoder do not become evident until bad reviews sta
 In order for relieve a pain of having to roll your own solution, this project aim to be a drop in
 replacement for the built in Android Geocoder.
 
-[ ] Remove RxJava from API in favor of Kotlin coroutines.
+- [ ] Remove RxJava from API in favor of Kotlin coroutines.
 
-[ ] Match method signature of Android's Geocoder.
+- [ ] Match method signature of Android's Geocoder.
 
-[ ] Use Android Platform Address object
+- [ ] Use Android Platform Address object
 
-[ ] Streaming JSON parsing
+- [ ] Streaming JSON parsing
 
 
 
